@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Горизонтальний скролінг</title>
+    <title>Віртуальна бібліотека вчителів Ukrainian Global School</title>
     <style>
         body, html {
             margin: 0;
@@ -14,7 +14,7 @@
         .container {
             display: flex;
             height: 100vh;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
         .section {
             flex: 0 0 100vw;
@@ -40,13 +40,60 @@
         const container = document.querySelector('.container');
         let scrollPosition = 0;
         const sectionWidth = window.innerWidth;
+        const totalWidth = sectionWidth * (container.children.length - 1);
+        let startX, startY;
+        let isSwiping = false;
 
+        function updateScroll(delta) {
+            scrollPosition += delta;
+            scrollPosition = Math.max(0, Math.min(scrollPosition, totalWidth));
+            container.style.transform = `translateX(-${scrollPosition}px)`;
+        }
+
+        // Обробка колеса миші
         window.addEventListener('wheel', (e) => {
             e.preventDefault();
-            scrollPosition += e.deltaY;
-            scrollPosition = Math.max(0, Math.min(scrollPosition, sectionWidth * (container.children.length - 1)));
-            container.style.transform = `translateX(-${scrollPosition}px)`;
+            updateScroll(e.deltaY);
         }, { passive: false });
+
+        // Обробка дотиків
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isSwiping = false;
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!startX || !startY) return;
+
+            const x = e.touches[0].clientX;
+            const y = e.touches[0].clientY;
+            const dx = startX - x;
+            const dy = startY - y;
+
+            if (!isSwiping) {
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    isSwiping = true;
+                    e.preventDefault();
+                }
+            } else {
+                updateScroll(dx);
+                startX = x;
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchend', () => {
+            startX = null;
+            startY = null;
+        }, { passive: true });
+
+        // Обробка зміни розміру вікна
+        window.addEventListener('resize', () => {
+            const newSectionWidth = window.innerWidth;
+            const scaleFactor = newSectionWidth / sectionWidth;
+            scrollPosition *= scaleFactor;
+            updateScroll(0);
+        });
     </script>
 </body>
 </html>
