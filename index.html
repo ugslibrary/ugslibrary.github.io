@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Віртуальна бібліотека вчителів Ukrainian Global School</title>
+    <title>Горизонтальний скролінг з повноекранним фоном</title>
     <style>
         body, html {
             margin: 0;
@@ -11,10 +11,22 @@
             height: 100%;
             overflow: hidden;
         }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 500%; /* Ширина залежить від кількості секцій */
+            height: 100vh;
+            background-image: url('main_bg.png');
+            background-repeat: repeat-x;
+            background-size: auto 100%;
+            z-index: -1;
+        }
         .container {
             display: flex;
             height: 100vh;
             transition: transform 0.3s ease;
+            position: relative;
         }
         .section {
             flex: 0 0 100vw;
@@ -24,20 +36,23 @@
             align-items: center;
             font-size: 2em;
             color: white;
+            background-color: rgba(0, 0, 0, 0.5); /* Напівпрозорий фон для кращої читабельності */
         }
     </style>
 </head>
 <body>
+    <div class="background"></div>
     <div class="container">
-        <div class="section" style="background-color: #ff6b6b;">Секція 1</div>
-        <div class="section" style="background-color: #4ecdc4;">Секція 2</div>
-        <div class="section" style="background-color: #45b7d1;">Секція 3</div>
-        <div class="section" style="background-color: #f7b731;">Секція 4</div>
-        <div class="section" style="background-color: #5c7cfa;">Секція 5</div>
+        <div class="section">Секція 1</div>
+        <div class="section">Секція 2</div>
+        <div class="section">Секція 3</div>
+        <div class="section">Секція 4</div>
+        <div class="section">Секція 5</div>
     </div>
 
     <script>
         const container = document.querySelector('.container');
+        const background = document.querySelector('.background');
         let scrollPosition = 0;
         const sectionWidth = window.innerWidth;
         const totalWidth = sectionWidth * (container.children.length - 1);
@@ -48,6 +63,7 @@
             scrollPosition += delta;
             scrollPosition = Math.max(0, Math.min(scrollPosition, totalWidth));
             container.style.transform = `translateX(-${scrollPosition}px)`;
+            background.style.transform = `translateX(-${scrollPosition * 0.5}px)`; // Паралакс-ефект
         }
 
         // Обробка колеса миші
