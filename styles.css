@@ -1,0 +1,85 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* Стилі для фонового зображення */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 500%; /* Ширина залежить від кількості секцій */
+    height: 100vh;
+    background-image: url('images/main_bg.png');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    z-index: -1;
+}
+
+/* Основний контейнер для горизонтального скролінгу */
+.container {
+    display: flex;
+    height: 100vh;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+/* Стилі для кожної секції */
+.section {
+    flex: 0 0 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* Контейнер для контенту секції */
+.section-content {
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Стилі для заголовків */
+.section h1 {
+    font-size: 2.5em;
+    margin-bottom: 1rem;
+}
+
+.section h2 {
+    font-size: 1.8em;
+    margin-bottom: 1rem;
+}
+
+/* Стилі для параграфів */
+.section p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* Стилі для зображень */
+.section img {
+    max-width: 30%;
+    height: auto;
+}
+.person {
+    max-width: 60%!important;
+}
+
+.logo {
+    position: absolute;
+    top:20px;
+    left: 30px;
+}
+.door {
+    margin-bottom: 6.5rem;
+
+}
