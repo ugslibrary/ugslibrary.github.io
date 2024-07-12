@@ -4,144 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Горизонтальний скролінг з наповненою секцією</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 500%;
-            height: 100vh;
-            background-image: url('main_bg.png');
-            background-repeat: repeat-x;
-            background-size: auto 100%;
-            z-index: -1;
-        }
-        .container {
-            display: flex;
-            height: 100vh;
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-        .section {
-            flex: 0 0 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            /* background-color: rgba(0, 0, 0, 0.6); */
-            padding: 2rem;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        .section-content {
-            max-width: 800px;
-            text-align: center;
-        }
-        .section h1 {
-            font-size: 2.5em;
-            margin-bottom: 1rem;
-        }
-        .section h2 {
-            font-size: 1.8em;
-            margin-bottom: 1rem;
-        }
-        .section p {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-        .section img {
-            max-width: 100%;
-            height: auto;
-            margin: 1rem 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Фоновий елемент для повторюваного зображення -->
     <div class="background"></div>
+    
+    <!-- Основний контейнер для горизонтального скролінгу -->
     <div class="container">
+        <!-- Перша секція з наповненим контентом -->
         <div class="section">
             <div class="section-content">
-                <h1>Дивовижний світ природи</h1>
-                <img src="/api/placeholder/800/400" alt="Красивий пейзаж">
-                <h2>Відкрийте для себе неймовірну красу нашої планети</h2>
-                <p>Природа завжди вражає своєю різноманітністю та величчю. Від величних гір до безкрайніх океанів, кожен куточок Землі має свою унікальну історію та красу.</p>
-                <img src="/api/placeholder/400/300" alt="Гірське озеро">
+                <img class="logo" src="images/ugs_logo.png" alt="Ukrainian Global School Logo">
+                <img class="person" src="images/hi.png" alt="Вітання">
             </div>
         </div>
-        <div class="section">Секція 2</div>
-        <div class="section">Секція 3</div>
-        <div class="section">Секція 4</div>
-        <div class="section">Секція 5</div>
+        <!-- Додаткові секції (можна наповнити за аналогією) -->
+        <div class="section">
+            <div class="section-content">
+                <img class="person"  src="images/artem_hi.png" alt="Artem with Book">
+                <img class="door" src="images/door.png" alt="Door">
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-content">
+                <img class="person"  src="images/artem_hi_1.png" alt="Artem with Book">
+                <img class="door" src="images/door.png" alt="Door">
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-content">
+                <img class="person"  src="images/artem_hi.png" alt="Artem with Book">
+                <img class="door" src="images/door.png" alt="Door">
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-content">
+                <img class="person"  src="images/artem_hi_1.png" alt="Artem with Book">
+                <img class="door" src="images/door.png" alt="Door">
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-content">
+                <img class="person"  src="images/artem_hi.png" alt="Artem with Book">
+                <img class="door" src="images/door.png" alt="Door">
+            </div>
+        </div>
     </div>
 
-    <script>
-        // JavaScript код залишається без змін
-        const container = document.querySelector('.container');
-        const background = document.querySelector('.background');
-        let scrollPosition = 0;
-        const sectionWidth = window.innerWidth;
-        const totalWidth = sectionWidth * (container.children.length - 1);
-        let startX, startY;
-        let isSwiping = false;
-
-        function updateScroll(delta) {
-            scrollPosition += delta;
-            scrollPosition = Math.max(0, Math.min(scrollPosition, totalWidth));
-            container.style.transform = `translateX(-${scrollPosition}px)`;
-            background.style.transform = `translateX(-${scrollPosition * 0.5}px)`;
-        }
-
-        window.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            updateScroll(e.deltaY);
-        }, { passive: false });
-
-        container.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            isSwiping = false;
-        }, { passive: true });
-
-        container.addEventListener('touchmove', (e) => {
-            if (!startX || !startY) return;
-            const x = e.touches[0].clientX;
-            const y = e.touches[0].clientY;
-            const dx = startX - x;
-            const dy = startY - y;
-            if (!isSwiping) {
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    isSwiping = true;
-                    e.preventDefault();
-                }
-            } else {
-                updateScroll(dx);
-                startX = x;
-            }
-        }, { passive: false });
-
-        container.addEventListener('touchend', () => {
-            startX = null;
-            startY = null;
-        }, { passive: true });
-
-        window.addEventListener('resize', () => {
-            const newSectionWidth = window.innerWidth;
-            const scaleFactor = newSectionWidth / sectionWidth;
-            scrollPosition *= scaleFactor;
-            updateScroll(0);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
+</html>
 </html>
