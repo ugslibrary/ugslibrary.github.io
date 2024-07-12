@@ -3,20 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Шкільний Коридор</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Горизонтальний скролінг</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            transition: transform 0.5s ease;
+        }
+        .section {
+            flex: 0 0 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div class="hallway">
-        <div class="teacher-room">
-            <img src="images/teacher-artem.png" alt="Пан Артем">
-            <a href="artem.html">Кабінет пана Артема</a>
-        </div>
-        <div class="teacher-room">
-            <img src="images/teacher-eli.png" alt="Місіс Елі">
-            <a href="eli.html">Кабінет місіс Елі</a>
-        </div>
-        <!-- Додайте інші кабінети за необхідності -->
+    <div class="container">
+        <div class="section" style="background-color: #ff6b6b;">Секція 1</div>
+        <div class="section" style="background-color: #4ecdc4;">Секція 2</div>
+        <div class="section" style="background-color: #45b7d1;">Секція 3</div>
+        <div class="section" style="background-color: #f7b731;">Секція 4</div>
+        <div class="section" style="background-color: #5c7cfa;">Секція 5</div>
     </div>
+
+    <script>
+        const container = document.querySelector('.container');
+        let scrollPosition = 0;
+        const sectionWidth = window.innerWidth;
+
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            scrollPosition += e.deltaY;
+            scrollPosition = Math.max(0, Math.min(scrollPosition, sectionWidth * (container.children.length - 1)));
+            container.style.transform = `translateX(-${scrollPosition}px)`;
+        }, { passive: false });
+    </script>
 </body>
 </html>
