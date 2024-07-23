@@ -87,6 +87,10 @@ body, html {
     max-width: 440px;
     cursor: pointer;
 }
+.persons {
+    max-width: 440px;
+    cursor: pointer;
+}
 .door {
     max-width: 250px;
 }
