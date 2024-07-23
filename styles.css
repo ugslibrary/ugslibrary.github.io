@@ -127,3 +127,24 @@ body, html {
 .image-container:hover .bubble {
     display: block;
 }
+
+@media (max-width: 768px) {
+    .background {
+        background-image: url('images/bg_mobile');
+        background-size: cover;
+    }
+
+    .section h1 {
+        font-size: 2em;
+    }
+
+    .section p {
+        font-size: 1em;
+    }
+    .person, .flower {
+    display: none;
+
+    .image-placeholder {
+        height: 150px; /* Менша висота для мобільних пристроїв */
+    }
+}
